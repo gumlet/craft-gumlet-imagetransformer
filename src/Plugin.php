@@ -75,17 +75,27 @@ class Plugin extends BasePlugin
         }
 
         // Register Gumlet service as a Twig variable (only for web requests)
-        $plugin = $this;
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (Event $event) use ($plugin) {
+            function (Event $event) {
                 try {
                     /** @var CraftVariable $variable */
                     $variable = $event->sender;
-                    // Access the component via the plugin instance
-                    if ($plugin && property_exists($plugin, 'gumlet') && $plugin->gumlet) {
-                        $variable->set('gumlet', $plugin->gumlet);
+                    // Get the plugin instance
+                    $plugin = self::getInstance();
+                    if ($plugin) {
+                        // Try to get the component - it should be available after plugin init
+                        // Access it directly as a property (Craft creates it from config())
+                        try {
+                            $gumletService = $plugin->gumlet;
+                            if ($gumletService) {
+                                $variable->set('gumlet', $gumletService);
+                            }
+                        } catch (\Throwable $componentError) {
+                            // If component access fails, create service directly as fallback
+                            $variable->set('gumlet', new GumletService());
+                        }
                     }
                 } catch (\Throwable $e) {
                     // Silently fail if service isn't available

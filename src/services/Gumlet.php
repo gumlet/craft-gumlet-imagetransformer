@@ -30,6 +30,15 @@ class Gumlet extends Component
             $domain = $config['gumletDomain'] ?? '';
         }
         
+        // Normalize the domain - strip protocol and trailing slashes
+        // Accepts: "https://craft-sample.gumlet.io/", "craft-sample.gumlet.io", etc.
+        if (!empty($domain)) {
+            // Remove protocol (http:// or https://)
+            $domain = preg_replace('#^https?://#', '', $domain);
+            // Remove trailing slashes
+            $domain = rtrim($domain, '/');
+        }
+        
         return $domain;
     }
 

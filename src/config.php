@@ -1,7 +1,8 @@
 <?php
 
 return [
-    // Gumlet domain (e.g., 'your-domain.gumlet.io')
+    // Gumlet domain (e.g., 'your-domain.gumlet.io' or 'https://your-domain.gumlet.io')
+    // Protocol and trailing slashes will be automatically stripped
     'gumletDomain' => getenv('GUMLET_DOMAIN') ?: '',
 
     // Enable Gumlet transforms
