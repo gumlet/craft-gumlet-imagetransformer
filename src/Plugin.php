@@ -5,7 +5,7 @@ namespace gumlet\imagetransformer;
 use Craft;
 use craft\base\Plugin as BasePlugin;
 use craft\events\RegisterComponentTypesEvent;
-use craft\services\Assets;
+use craft\services\ImageTransforms;
 use gumlet\imagetransformer\models\Settings;
 use gumlet\imagetransformer\services\Gumlet as GumletService;
 use gumlet\imagetransformer\transformers\GumletTransformer;
@@ -43,8 +43,8 @@ class Plugin extends BasePlugin
 
         // Register the Gumlet transformer
         Event::on(
-            Assets::class,
-            Assets::EVENT_REGISTER_IMAGE_TRANSFORMERS,
+            ImageTransforms::class,
+            ImageTransforms::EVENT_REGISTER_IMAGE_TRANSFORMERS,
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = GumletTransformer::class;
             }
