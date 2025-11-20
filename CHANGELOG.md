@@ -1,6 +1,6 @@
 # Release Notes for Gumlet
 
-## 1.0.2 - 2025-11-20
+## 1.1.0 - 2025-11-20
 
 ### Added
 - Initial release
