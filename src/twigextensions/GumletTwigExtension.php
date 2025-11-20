@@ -38,14 +38,9 @@ class GumletTwigExtension extends AbstractExtension
         // Access the gumlet component as a property (created by Craft from config())
         $gumlet = $plugin->gumlet;
         
-        // Convert array transform to ImageTransform object if needed
-        if (is_array($transform)) {
-            $transformObj = new ImageTransform($transform);
-        } else {
-            $transformObj = $transform;
-        }
-        
-        return $gumlet->buildUrl($asset, $transformObj, $additionalParams);
+        // Pass the transform directly to buildUrl - it handles type-safe filtering
+        // buildUrl will filter out invalid properties and route them to additionalParams
+        return $gumlet->buildUrl($asset, $transform, $additionalParams);
     }
 }
 
