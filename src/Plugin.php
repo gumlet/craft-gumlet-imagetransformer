@@ -28,7 +28,7 @@ class Plugin extends BasePlugin
     /**
      * @inheritdoc
      */
-    protected static function config(): array
+    public static function config(): array
     {
         return [
             'components' => [
