@@ -86,11 +86,6 @@ class Gumlet extends Component
         // Convert array transform to ImageTransform object if needed
         $transformObj = null;
         if (is_array($transform)) {
-            // Extract additional Gumlet params if they exist in the array
-            if (isset($transform['gumlet']) && is_array($transform['gumlet'])) {
-                $additionalParams = array_merge($transform['gumlet'], $additionalParams);
-                unset($transform['gumlet']);
-            }
             $transformObj = new ImageTransform($transform);
         } else {
             $transformObj = $transform;

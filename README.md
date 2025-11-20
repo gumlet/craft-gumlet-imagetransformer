@@ -74,8 +74,8 @@ You can also use the Gumlet service directly:
 {# Basic usage #}
 <img src="{{ craft.gumlet.buildUrl(asset, { width: 300, height: 300 }) }}" alt="{{ asset.title }}" />
 
-{# With Gumlet-specific parameters in the transform array #}
-<img src="{{ craft.gumlet.buildUrl(asset, { width: 300, height: 300, gumlet: { blur: 10 } }) }}" alt="{{ asset.title }}" />
+{# With Gumlet-specific parameters as third argument #}
+<img src="{{ craft.gumlet.buildUrl(asset, { width: 300, height: 300 }, { blur: 10 }) }}" alt="{{ asset.title }}" />
 
 {# Without transform (just replaces domain) #}
 <img src="{{ craft.gumlet.buildUrl(asset) }}" alt="{{ asset.title }}" />
@@ -116,38 +116,14 @@ In addition to the standard Craft CMS transform options:
 * `position`
 * `fill`
 
-You can also apply additional Gumlet parameters. There are two ways to do this:
-
-**Option 1: Using the `gumlet` key in transform array**
+You can also apply additional Gumlet parameters by passing them as the third argument:
 
 ```twig
 {# Using gumletUrl() function #}
-<img src="{{ gumletUrl(asset, { 
-    width: 300, 
-    height: 300,
-    gumlet: {
-        blur: 20,
-        brightness: 10,
-        contrast: 5,
-    }
-}) }}" alt="{{ asset.title }}" />
+<img src="{{ gumletUrl(asset, { width: 300, height: 300 }, { blur: 20, brightness: 10, contrast: 5 }) }}" alt="{{ asset.title }}" />
 
 {# Using service method #}
-<img src="{{ craft.gumlet.buildUrl(asset, { 
-    width: 300, 
-    height: 300,
-    gumlet: {
-        blur: 20,
-        brightness: 10,
-        contrast: 5,
-    }
-}) }}" alt="{{ asset.title }}" />
-```
-
-**Option 2: Passing as third parameter (gumletUrl only)**
-
-```twig
-<img src="{{ gumletUrl(asset, { width: 300, height: 300 }, { blur: 20, brightness: 10 }) }}" alt="{{ asset.title }}" />
+<img src="{{ craft.gumlet.buildUrl(asset, { width: 300, height: 300 }, { blur: 20, brightness: 10 }) }}" alt="{{ asset.title }}" />
 ```
 
 ### Available Gumlet Parameters
@@ -167,10 +143,6 @@ Gumlet supports many transformation parameters. Some common ones include:
 For a complete list of available parameters, see the [Gumlet Image Transformation API documentation](https://docs.gumlet.com/docs/image-transform-apis).
 
 **Note:** This plugin uses Gumlet's standard short parameter names (`w` for width, `h` for height, `q` for quality, `f` for format). These are the default parameter names used by Gumlet's image transformation API.
-
-#### `gumlet` object key values
-
-In Craft CMS < v5.6.0 the additional `gumlet` object key values may be lost when calling `.srcset()`. This is a limitation of how Craft CMS handles transform parameters.
 
 ## Mapping
 
@@ -197,7 +169,15 @@ Craft CMS positions are mapped to Gumlet crop positions:
 * `bottom-center` → `bottom`
 * `bottom-right` → `bottom-right`
 
-## About
+## Support
 
-Gumlet asset transforms for Craft CMS
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/akbansa/craft-gumlet-imagetransformer).
+
+## License
+
+This plugin is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Credits
+
+Developed by [Anshul Bansal](https://github.com/akbansa)
 

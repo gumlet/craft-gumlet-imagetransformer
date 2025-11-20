@@ -1,6 +1,6 @@
 # Release Notes for Gumlet
 
-## 1.2.2 - 2025-11-20
+## 1.3.0 - 2025-11-20
 
 ### Added
 - `gumletUrl()` Twig function for easy URL generation
@@ -8,10 +8,18 @@
 - Support for passing Gumlet parameters as third argument to `gumletUrl()`
 - Improved domain normalization (strips protocol and trailing slashes automatically)
 - Better error handling during plugin installation
+- Twig extension for direct URL generation
 
 ### Changed
 - `buildUrl()` method now accepts both array and ImageTransform object types
+- Simplified transform parameter handling - Gumlet parameters must be passed via `additionalParams`
 - Improved documentation with multiple usage examples
+- Better component access patterns
+
+### Fixed
+- Fixed Twig extension registration
+- Fixed component access in Twig extension and transformer
+- Fixed domain normalization to handle URLs with protocols
 
 ## 1.1.3 - 2025-11-20
 

@@ -22,27 +22,8 @@ class GumletTransformer implements ImageTransformerInterface
     {
         $plugin = Plugin::getInstance();
         $gumlet = $plugin->gumlet;
-        
-        // Extract additional Gumlet parameters from transform
-        $additionalParams = [];
-        
-        // Check if transform has additional Gumlet parameters
-        // These can be passed via the transform array in templates
-        // In Craft CMS, custom transform parameters are stored in the transform's custom properties
-        if (method_exists($transform, 'getCustomProperties')) {
-            $customProps = $transform->getCustomProperties();
-            if (isset($customProps['gumlet']) && is_array($customProps['gumlet'])) {
-                $additionalParams = $customProps['gumlet'];
-            }
-        } else {
-            // Fallback: try toArray() method
-            $transformArray = $transform->toArray();
-            if (isset($transformArray['gumlet']) && is_array($transformArray['gumlet'])) {
-                $additionalParams = $transformArray['gumlet'];
-            }
-        }
 
-        return $gumlet->buildUrl($asset, $transform, $additionalParams);
+        return $gumlet->buildUrl($asset, $transform);
     }
 
     /**
