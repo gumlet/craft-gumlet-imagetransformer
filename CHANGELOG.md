@@ -1,5 +1,11 @@
 # Release Notes for Gumlet
 
+## 1.3.1 - 2025-11-20
+
+### Changed
+- Removed unused `originalTransformer` property
+- Cleaned up code annotations
+
 ## 1.3.0 - 2025-11-20
 
 ### Added
