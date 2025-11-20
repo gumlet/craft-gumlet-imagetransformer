@@ -47,32 +47,49 @@ class Plugin extends BasePlugin
     {
         parent::init();
 
+        // Only initialize transformer if Craft application is fully bootstrapped
+        // and the ImageTransforms service is available
+        // This prevents errors during plugin installation
+        if (!Craft::$app) {
+            return;
+        }
+
         // Override Craft's default image transformer with Gumlet transformer
         // This replaces the default transformer completely, so all image transforms
         // will go through Gumlet instead of Craft's native image processing
         try {
-            $imageTransforms = Craft::$app->getImageTransforms();
-            if ($imageTransforms) {
-                // Store the original transformer in case we need to restore it
-                $this->originalTransformer = $imageTransforms->getTransformer();
-                
-                // Set Gumlet transformer as the new default
-                // This means ALL image transforms will use Gumlet URLs with query parameters
-                // instead of Craft's path-based transform URLs (e.g., _300x300_crop_center-center_none/)
-                $imageTransforms->setTransformer(new GumletTransformer());
+            if (Craft::$app->has('imageTransforms', true)) {
+                $imageTransforms = Craft::$app->getImageTransforms();
+                if ($imageTransforms) {
+                    // Store the original transformer in case we need to restore it
+                    $this->originalTransformer = $imageTransforms->getTransformer();
+                    
+                    // Set Gumlet transformer as the new default
+                    // This means ALL image transforms will use Gumlet URLs with query parameters
+                    // instead of Craft's path-based transform URLs (e.g., _300x300_crop_center-center_none/)
+                    $imageTransforms->setTransformer(new GumletTransformer());
+                }
             }
         } catch (\Throwable $e) {
             // Silently fail if service isn't available (e.g., during early installation phase)
         }
 
         // Register Gumlet service as a Twig variable (only for web requests)
+        $plugin = $this;
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('gumlet', $this->getGumlet());
+            function (Event $event) use ($plugin) {
+                try {
+                    /** @var CraftVariable $variable */
+                    $variable = $event->sender;
+                    // Access the component via the plugin instance
+                    if ($plugin && property_exists($plugin, 'gumlet') && $plugin->gumlet) {
+                        $variable->set('gumlet', $plugin->gumlet);
+                    }
+                } catch (\Throwable $e) {
+                    // Silently fail if service isn't available
+                }
             }
         );
     }
