@@ -1,0 +1,56 @@
+{
+    "name": "gumlet/craft-gumlet-imagetransformer",
+    "description": "Gumlet asset transforms for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "plugin",
+        "gumlet",
+        "image",
+        "transform"
+    ],
+    "support": {
+        "docs": "https://github.com/akbansa/craft-gumlet-imagetransformer",
+        "issues": "https://github.com/akbansa/craft-gumlet-imagetransformer/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anshul Bansal",
+            "homepage": "https://github.com/akbansa"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^4.0.0|^5.0.0",
+        "php": "^8.0.2"
+    },
+    "require-dev": {
+        "craftcms/ecs": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "gumlet\\imagetransformer\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Gumlet",
+        "handle": "gumlet-imagetransformer",
+        "developer": "Anshul Bansal",
+        "developerUrl": "https://github.com/akbansa",
+        "documentationUrl": "https://github.com/akbansa/craft-gumlet-imagetransformer",
+        "changelogUrl": "https://raw.githubusercontent.com/akbansa/craft-gumlet-imagetransformer/main/CHANGELOG.md",
+        "class": "gumlet\\imagetransformer\\Plugin"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
